@@ -56,7 +56,7 @@ public class AviaSoulsTest {
     }
 
     @Test
-    public void shouldCompareToPriceSearchSochi() {
+    public void shouldFindFiveMatchSearchToSochi() {
         Ticket[] expected = { ticket4, ticket9, ticket11, ticket13, ticket12 };
         Ticket[] actual = avia.search("Екатеринбург", "Сочи");
 
@@ -64,9 +64,17 @@ public class AviaSoulsTest {
     }
 
     @Test
-    public void shouldCompareToPriceSearchVolgograd() {
-        Ticket[] expected = { ticket10, ticket8, ticket14, ticket15 };
-        Ticket[] actual = avia.search("Екатеринбург", "Волгоград");
+    public void shouldFindOneMatchSearchToMoscow() {
+        Ticket[] expected = { ticket3 };
+        Ticket[] actual = avia.search("Екатеринбург", "Москва");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindNotMatchSearchToMoscow() {
+        Ticket[] expected = {  };
+        Ticket[] actual = avia.search("Екатеринбург", "Вологда");
 
         Assertions.assertArrayEquals(expected, actual);
     }
@@ -89,6 +97,26 @@ public class AviaSoulsTest {
 
         Ticket[] expected = { ticket8, ticket14, ticket15, ticket10 };
         Ticket[] actual = avia.searchAndSortBy("Екатеринбург", "Волгоград", timeComparator);
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindOneMatchCompareToTimeFly() {
+        TicketTimeComparator timeComparator = new TicketTimeComparator();
+
+        Ticket[] expected = { ticket2 };
+        Ticket[] actual = avia.searchAndSortBy("Екатеринбург", "Мурманск", timeComparator);
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void ShouldFindNotMatchCompareToTimeFly() {
+        TicketTimeComparator timeComparator = new TicketTimeComparator();
+
+        Ticket[] expected = {  };
+        Ticket[] actual = avia.searchAndSortBy("Екатеринбург", "Вологда", timeComparator);
 
         Assertions.assertArrayEquals(expected, actual);
     }
